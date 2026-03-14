@@ -11,6 +11,9 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Derby Youth Foundation - Professional Sound, Lighting & Studio Services',
   description: 'High-quality live event equipment hire, rehearsal space and recording services across the Midlands and the UK.',
+  icons: {
+    icon: '/logo.png',
+  },
 };
 
 export const viewport: Viewport = {
