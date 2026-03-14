@@ -66,7 +66,7 @@ const parseMessageContent = (content: string): React.ReactNode => {
       <Link
         key={`uuid-${startIndex}`}
         href={`/products/${productId}`}
-        className="text-blue-400 hover:text-blue-300 underline font-medium transition-colors"
+        className="text-primary hover:text-secondary underline font-medium transition-colors"
       >
         {productId}
       </Link>
@@ -114,7 +114,7 @@ const parseTextForProducts = (
         <Link
           key={`quoted-${index}`}
           href={`/products?search=${encodeURIComponent(productName)}`}
-          className="text-blue-400 hover:text-blue-300 underline font-medium transition-colors break-words"
+          className="text-primary hover:text-secondary underline font-medium transition-colors break-words"
           style={{ wordBreak: 'break-word' }}
         >
           {match}
@@ -141,7 +141,7 @@ const parseTextForProducts = (
       <Link
         key={`product-${startIndex}`}
         href={`/products?search=${encodeURIComponent(productName)}`}
-        className="text-blue-400 hover:text-blue-300 underline font-medium transition-colors break-words"
+        className="text-primary hover:text-secondary underline font-medium transition-colors break-words"
         style={{ wordBreak: 'break-word' }}
       >
         {productMatch[0]}
@@ -324,15 +324,15 @@ export function ChatInterface({ className, embedded = false, onClose }: ChatInte
   const content = (
     <div className={cn('flex flex-col h-full', embedded ? '' : 'h-[600px]')}>
       {!embedded && (
-        <div className="flex items-center gap-2 px-6 py-4 border-b border-slate-800 bg-slate-900/50">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
+        <div className="flex items-center gap-2 px-6 py-4 border-b border-border bg-accent/80">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent">
             <Sparkles className="w-4 h-4 text-white" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-white">Pinnacle Sales Assistant</h3>
+            <h3 className="text-sm font-semibold text-white">Derby Youth Foundation Assistant</h3>
           </div>
           {(isLoading || isThinking) && (
-            <div className="ml-auto flex items-center gap-2 text-xs text-slate-400">
+            <div className="ml-auto flex items-center gap-2 text-xs text-primary-foreground/70">
               <Loader2 className="w-3 h-3 animate-spin" />
               <span>Thinking...</span>
             </div>
@@ -340,18 +340,18 @@ export function ChatInterface({ className, embedded = false, onClose }: ChatInte
         </div>
       )}
       {embedded && (
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-accent/80">
           <div className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
+            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white">Pinnacle Sales Assistant</h3>
+              <h3 className="text-sm font-semibold text-white">Derby Youth Foundation Assistant</h3>
             </div>
           </div>
           <div className="flex items-center gap-3">
             {(isLoading || isThinking) && (
-              <div className="flex items-center gap-2 text-xs text-slate-400">
+              <div className="flex items-center gap-2 text-xs text-primary-foreground/70">
                 <Loader2 className="w-3 h-3 animate-spin" />
                 <span>Thinking...</span>
               </div>
@@ -361,7 +361,7 @@ export function ChatInterface({ className, embedded = false, onClose }: ChatInte
                 onClick={onClose}
                 variant="ghost"
                 size="icon"
-                className="h-7 w-7 text-slate-400 hover:text-white hover:bg-slate-800"
+                className="h-7 w-7 text-primary-foreground/70 hover:text-primary-foreground hover:bg-accent/60"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -375,11 +375,11 @@ export function ChatInterface({ className, embedded = false, onClose }: ChatInte
           <div ref={scrollRef} className="py-4 space-y-4 min-w-0">
             {messages.length === 0 && (
               <div className="flex flex-col items-center justify-center h-full text-center px-4">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-600/20 flex items-center justify-center mb-4">
-                  <Bot className="w-8 h-8 text-blue-400" />
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-4">
+                  <Bot className="w-8 h-8 text-secondary" />
                 </div>
                 <h4 className="text-lg font-semibold text-white mb-2">Welcome I'm your Sales Assistant</h4>
-                <p className="text-sm text-slate-400 max-w-md">
+                <p className="text-sm text-primary-foreground/70 max-w-md">
                   I can help you search for products, add items to your cart, and answer questions about our inventory.
                   Try asking me to search for something!
                 </p>
@@ -404,8 +404,8 @@ export function ChatInterface({ className, embedded = false, onClose }: ChatInte
                     className={cn(
                       'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center',
                       message.role === 'user'
-                        ? 'bg-blue-600'
-                        : 'bg-gradient-to-br from-blue-500 to-purple-600'
+                        ? 'bg-primary'
+                        : 'bg-gradient-to-br from-primary to-accent'
                     )}
                   >
                     {message.role === 'user' ? (
@@ -418,13 +418,13 @@ export function ChatInterface({ className, embedded = false, onClose }: ChatInte
                     className={cn(
                       'rounded-2xl px-4 py-2.5 text-sm min-w-0 max-w-full',
                       message.role === 'user'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-slate-800/80 text-slate-100 border border-slate-700/50'
+                        ? 'bg-primary text-white'
+                        : 'bg-accent/90 text-primary-foreground border border-primary/30'
                     )}
                     style={{ wordWrap: 'break-word', overflowWrap: 'anywhere' }}
                   >
                     {message.role === 'assistant' ? (
-                      <div className="text-slate-100 whitespace-pre-wrap break-words" style={{ wordWrap: 'break-word', overflowWrap: 'anywhere' }}>
+                      <div className="text-primary-foreground whitespace-pre-wrap break-words" style={{ wordWrap: 'break-word', overflowWrap: 'anywhere' }}>
                         {parseMessageContent(message.content)}
                       </div>
                     ) : (
@@ -434,7 +434,7 @@ export function ChatInterface({ className, embedded = false, onClose }: ChatInte
                       <div
                         className={cn(
                           'text-xs mt-1.5',
-                          message.role === 'user' ? 'text-blue-100' : 'text-slate-400'
+                          message.role === 'user' ? 'text-primary-foreground/80' : 'text-primary-foreground/70'
                         )}
                       >
                         {message.timestamp.toLocaleTimeString([], {
@@ -452,11 +452,11 @@ export function ChatInterface({ className, embedded = false, onClose }: ChatInte
             {isThinking && (
               <div className="flex gap-3 w-full justify-start">
                 <div className="flex gap-3 max-w-[85%] min-w-0">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
                     <Bot className="w-4 h-4 text-white" />
                   </div>
-                  <div className="bg-slate-800/80 text-slate-100 border border-slate-700/50 rounded-2xl px-4 py-2.5 min-w-0">
-                    <div className="flex items-center gap-2 text-sm text-slate-400">
+                  <div className="bg-accent/90 text-primary-foreground border border-primary/30 rounded-2xl px-4 py-2.5 min-w-0">
+                    <div className="flex items-center gap-2 text-sm text-primary-foreground/70">
                       <Loader2 className="w-4 h-4 animate-spin flex-shrink-0" />
                       <span>Thinking...</span>
                     </div>
@@ -468,7 +468,7 @@ export function ChatInterface({ className, embedded = false, onClose }: ChatInte
         </ScrollArea>
 
         {/* Input Area */}
-        <div className="border-t border-slate-800 p-4 bg-slate-900/30">
+        <div className="border-t border-border p-4 bg-accent/40">
           <form onSubmit={handleSubmit} className="flex gap-2">
             <Input
               ref={inputRef}
@@ -482,13 +482,13 @@ export function ChatInterface({ className, embedded = false, onClose }: ChatInte
               }}
               placeholder="Ask about products, search inventory, or add items to cart..."
               disabled={isLoading}
-              className="flex-1 bg-slate-900 border-slate-700 text-white placeholder:text-slate-500 focus-visible:ring-blue-500 focus-visible:border-blue-500"
+              className="flex-1 bg-accent/60 border-border text-primary-foreground placeholder:text-primary-foreground/50 focus-visible:ring-primary focus-visible:border-primary"
             />
             <Button
               type="submit"
               disabled={isLoading || !input.trim()}
               size="icon"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-gradient-to-r bg-primary hover:bg-primary/90 text-white border-0 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -497,7 +497,7 @@ export function ChatInterface({ className, embedded = false, onClose }: ChatInte
               )}
             </Button>
           </form>
-          <p className="text-xs text-slate-500 mt-2 text-center">
+          <p className="text-xs text-primary-foreground/60 mt-2 text-center">
             {!isLoading && 'Ready to help'}
             {isLoading && 'Processing your request...'}
           </p>
@@ -506,11 +506,11 @@ export function ChatInterface({ className, embedded = false, onClose }: ChatInte
   );
 
   if (embedded) {
-    return <div className={cn('flex flex-col h-full bg-slate-950', className)}>{content}</div>;
+    return <div className={cn('flex flex-col h-full bg-accent', className)}>{content}</div>;
   }
 
   return (
-    <Card className={cn('flex flex-col h-[600px] bg-slate-950 border-slate-800 shadow-2xl', className)}>
+    <Card className={cn('flex flex-col h-[600px] bg-accent border-border shadow-2xl', className)}>
       <CardContent className="flex flex-col h-full p-0">{content}</CardContent>
     </Card>
   );

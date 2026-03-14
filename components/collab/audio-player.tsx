@@ -134,23 +134,23 @@ export function AudioPlayer() {
   if (!currentTrack) return null;
 
   return (
-    <Card className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-lg border-t border-gray-200 shadow-2xl">
+    <Card className="fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-lg border-t border-border shadow-2xl">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="flex-shrink-0 p-2 bg-gradient-to-br from-[#0047AB]/10 to-[#0047AB]/5 rounded-lg">
+            <div className="flex-shrink-0 p-2 bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg">
               {loading ? (
-                <Loader2 className="h-5 w-5 text-[#0047AB] animate-spin" />
+                <Loader2 className="h-5 w-5 text-primary animate-spin" />
               ) : (
-                <Music className="h-5 w-5 text-[#0047AB]" />
+                <Music className="h-5 w-5 text-primary" />
               )}
             </div>
 
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-[#1A1A1A] truncate">
+              <p className="text-sm font-semibold text-foreground truncate">
                 {currentTrack.fileName}
               </p>
-              <p className="text-xs text-gray-600 truncate">
+              <p className="text-xs text-muted-foreground truncate">
                 {currentTrack.uploaderName}
               </p>
             </div>
@@ -162,7 +162,7 @@ export function AudioPlayer() {
                 size="sm"
                 onClick={togglePlayPause}
                 disabled={loading}
-                className="h-9 w-9 rounded-full bg-[#0047AB] hover:bg-[#003380] text-white p-0"
+                className="h-9 w-9 rounded-full bg-primary hover:bg-accent text-primary-foreground p-0"
               >
                 {isPlaying ? (
                   <Pause className="h-4 w-4" />
@@ -173,7 +173,7 @@ export function AudioPlayer() {
             </div>
 
             <div className="flex-1 flex items-center gap-2">
-              <span className="text-xs text-gray-600 font-medium min-w-[40px] text-right">
+              <span className="text-xs text-muted-foreground font-medium min-w-[40px] text-right">
                 {formatTime(currentTime)}
               </span>
               <Slider
@@ -184,7 +184,7 @@ export function AudioPlayer() {
                 className="flex-1"
                 disabled={loading}
               />
-              <span className="text-xs text-gray-600 font-medium min-w-[40px]">
+              <span className="text-xs text-muted-foreground font-medium min-w-[40px]">
                 {formatTime(duration)}
               </span>
             </div>
@@ -194,7 +194,7 @@ export function AudioPlayer() {
                 variant="ghost"
                 size="sm"
                 onClick={toggleMute}
-                className="h-8 w-8 p-0 text-gray-600 hover:text-[#0047AB]"
+                className="h-8 w-8 p-0 text-muted-foreground hover:text-primary"
               >
                 {isMuted ? (
                   <VolumeX className="h-4 w-4" />
@@ -217,7 +217,7 @@ export function AudioPlayer() {
               size="sm"
               onClick={togglePlayPause}
               disabled={loading}
-              className="h-9 w-9 rounded-full bg-[#0047AB] hover:bg-[#003380] text-white p-0"
+              className="h-9 w-9 rounded-full bg-primary hover:bg-accent text-primary-foreground p-0"
             >
               {isPlaying ? (
                 <Pause className="h-4 w-4" />
@@ -231,14 +231,14 @@ export function AudioPlayer() {
             variant="ghost"
             size="sm"
             onClick={handleClose}
-            className="h-8 w-8 p-0 text-gray-600 hover:text-red-600 flex-shrink-0"
+            className="h-8 w-8 p-0 text-muted-foreground hover:text-red-600 flex-shrink-0"
           >
             <X className="h-4 w-4" />
           </Button>
         </div>
 
         <div className="sm:hidden mt-2 flex items-center gap-2">
-          <span className="text-xs text-gray-600 font-medium min-w-[40px] text-right">
+          <span className="text-xs text-muted-foreground font-medium min-w-[40px] text-right">
             {formatTime(currentTime)}
           </span>
           <Slider
@@ -249,7 +249,7 @@ export function AudioPlayer() {
             className="flex-1"
             disabled={loading}
           />
-          <span className="text-xs text-gray-600 font-medium min-w-[40px]">
+          <span className="text-xs text-muted-foreground font-medium min-w-[40px]">
             {formatTime(duration)}
           </span>
         </div>

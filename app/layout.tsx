@@ -9,7 +9,7 @@ import { FloatingChat } from '@/components/FloatingChat';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Pinnacle SSA - Professional Sound, Lighting & Studio Services',
+  title: 'Derby Youth Foundation - Professional Sound, Lighting & Studio Services',
   description: 'High-quality live event equipment hire, rehearsal space and recording services across the Midlands and the UK.',
 };
 

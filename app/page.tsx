@@ -12,33 +12,31 @@ export default function Home() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'url(/images/studio-atmosphere.jpg)'
+            backgroundImage: 'url(/images/hero-poster.png)'
           }}
         />
         <div className="absolute inset-0 hero-overlay" />
 
         <div className="relative container mx-auto px-4 h-full flex items-center">
           <div className="max-w-4xl mx-auto text-center space-y-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/20 backdrop-blur-sm border border-gold/30 text-gold text-sm font-medium">
-              <Sparkles className="h-4 w-4" />
-              Professional Equipment & Studio Services
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary backdrop-blur-sm border border-primary-foreground/20 text-primary-foreground text-sm font-medium shadow-lg">
+              Empowering the next generation
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight drop-shadow-lg px-4">
-              Bringing your music,<br className="hidden sm:block" />events and productions<br className="hidden sm:block" />
-              <span className="text-gold">to life.</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight drop-shadow-lg px-4 text-white">
+              Supporting young people to thrive.
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-2xl mx-auto drop-shadow-md px-4">
-              High-quality live event equipment hire, rehearsal space and recording services across the Midlands and the UK.
+            <p className="text-base sm:text-lg md:text-xl text-white/95 max-w-2xl mx-auto drop-shadow-md px-4">
+              Spaces, opportunities and creative programmes so every young person in Derby can grow.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Link href="/equipment" className="w-full sm:w-auto">
-                <Button size="lg" className="w-full sm:w-auto gradient-gold text-background hover:opacity-90 px-8 shadow-lg min-h-[48px]">
+                <Button size="lg" className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 px-8 shadow-lg min-h-[48px]">
                   View Equipment
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link href="/studio" className="w-full sm:w-auto">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto border-white/50 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 min-h-[48px]">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-secondary bg-secondary/20 backdrop-blur-sm hover:bg-secondary/40 text-primary-foreground px-8 min-h-[48px]">
                   Studio Services
                 </Button>
               </Link>
@@ -49,9 +47,9 @@ export default function Home() {
 
       <section className="py-12 sm:py-16 md:py-20 container mx-auto px-4 sm:px-6 max-w-7xl">
         <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6">About <span className="text-gold">Pinnacle SSA</span></h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6">About <span className="text-gold">Derby Youth Foundation</span></h2>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Pinnacle SSA provides high-quality live event equipment hire, rehearsal space and recording services across the Midlands and the UK. With years of experience in the industry, we deliver professional solutions for musicians, venues, and event organizers.
+            Derby Youth Foundation is a CIC (community interest company) dedicated to empowering young people in Derby and the wider Midlands. We provide creative spaces, studio access, equipment and opportunities so that every young person can explore their potential, develop skills and grow. Our mission is to support the next generation to thrive.
           </p>
         </div>
 
@@ -64,7 +62,7 @@ export default function Home() {
                   backgroundImage: 'url(https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800)'
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-background/20 to-transparent" />
               <div className="absolute bottom-4 left-4 w-12 h-12 rounded-lg bg-teal/20 backdrop-blur-sm border border-teal/30 flex items-center justify-center">
                 <Radio className="h-6 w-6 text-teal" />
               </div>
@@ -84,10 +82,10 @@ export default function Home() {
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
                 style={{
-                  backgroundImage: 'url(/images/studio-keyboard-closeup.jpg)'
+                  backgroundImage: 'url(/images/recording-studio.png)'
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-background/20 to-transparent" />
               <div className="absolute bottom-4 left-4 w-12 h-12 rounded-lg bg-coral/20 backdrop-blur-sm border border-coral/30 flex items-center justify-center">
                 <Mic2 className="h-6 w-6 text-coral" />
               </div>
@@ -110,7 +108,7 @@ export default function Home() {
                   backgroundImage: 'url(/images/studio-wide-angle.jpg)'
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-background/20 to-transparent" />
               <div className="absolute bottom-4 left-4 w-12 h-12 rounded-lg bg-sky/20 backdrop-blur-sm border border-sky/30 flex items-center justify-center">
                 <Music2 className="h-6 w-6 text-sky" />
               </div>
@@ -190,24 +188,21 @@ export default function Home() {
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: 'url(/images/studio-multi-keyboard.jpg)'
+              backgroundImage: 'url(/images/ready-get-started.png)'
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/40 to-background/60" />
 
-          <div className="relative p-12 md:p-16 text-left md:text-center">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Ready to get started?</h2>
-            <p className="text-base sm:text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-              Browse our equipment packages, book studio time, or get in touch to discuss your specific requirements.
-            </p>
+          <div className="relative pt-8 md:pt-12 pb-12 md:pb-16 px-12 md:px-16 text-left md:text-center">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-foreground">Ready to get started?</h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/equipment">
-                <Button size="lg" className="gradient-gold text-background hover:opacity-90 px-8 shadow-lg">
+                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 shadow-lg">
                   Browse Equipment
                 </Button>
               </Link>
               <Link href="/cart">
-                <Button size="lg" variant="outline" className="border-teal/50 bg-teal/10 hover:bg-teal/20 text-teal px-8">
+                <Button size="lg" variant="outline" className="border-accent bg-background/80 hover:bg-background text-foreground px-8">
                   Book Now
                 </Button>
               </Link>

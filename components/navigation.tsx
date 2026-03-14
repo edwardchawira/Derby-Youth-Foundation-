@@ -1,8 +1,9 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Music, ShoppingCart, Menu, X, Users } from 'lucide-react';
+import { ShoppingCart, Menu, X, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/lib/cart-context';
@@ -76,9 +77,8 @@ export function Navigation() {
     <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background md:bg-background/95 md:backdrop-blur supports-[backdrop-filter]:md:bg-background/60">
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-xl font-bold">
-            <Music className="h-6 w-6 text-gold" />
-            <span className="text-foreground">Pinnacle <span className="text-gold">SSA</span></span>
+          <Link href="/" className="flex items-center gap-2 text-xl font-bold shrink-0">
+            <Image src="/logo.png" alt="Derby Youth Foundation" width={180} height={52} className="h-12 w-auto object-contain" priority />
           </Link>
 
           <div className="hidden md:flex items-center gap-6">
@@ -110,7 +110,7 @@ export function Navigation() {
                   <Users className="h-4 w-4 mr-2" />
                   Projects
                   {activeProjectsCount > 0 && (
-                    <Badge className="ml-2 bg-blue-500 text-white hover:bg-blue-600 text-xs px-1.5 py-0">
+                    <Badge className="ml-2 bg-primary text-primary-foreground hover:bg-primary/90 text-xs px-1.5 py-0">
                       {activeProjectsCount}
                     </Badge>
                   )}

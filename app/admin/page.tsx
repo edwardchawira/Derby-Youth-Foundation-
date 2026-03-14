@@ -877,7 +877,7 @@ export default function AdminPage() {
       case 'confirmed':
         return 'bg-green-500/10 text-green-500 border-green-500/20';
       case 'completed':
-        return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
+        return 'bg-primary/10 text-primary border-primary/20';
       case 'cancelled':
         return 'bg-red-500/10 text-red-500 border-red-500/20';
       default:
@@ -895,7 +895,7 @@ export default function AdminPage() {
               <Lock className="h-8 w-8 text-gold" />
             </div>
             <CardTitle className="text-3xl">Admin Login</CardTitle>
-            <CardDescription>Access the Pinnacle SSA dashboard</CardDescription>
+            <CardDescription>Access the Derby Youth Foundation dashboard</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
@@ -971,30 +971,30 @@ export default function AdminPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-secondary/30 to-secondary/50 border-blue-500/50 hover:border-blue-500 transition-all shadow-lg hover:shadow-xl">
+          <Card className="bg-gradient-to-br from-secondary/30 to-secondary/50 border-primary/50 hover:border-primary transition-all shadow-lg hover:shadow-xl">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Active Projects</CardTitle>
-              <div className="h-10 w-10 rounded-full bg-blue-500/10 flex items-center justify-center">
-                <FolderOpen className="h-5 w-5 text-blue-500" />
+              <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <FolderOpen className="h-5 w-5 text-primary" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-blue-500 mb-1">{stats.activeProjects}</div>
+              <div className="text-3xl font-bold text-primary mb-1">{stats.activeProjects}</div>
               <p className="text-xs text-muted-foreground">
                 {stats.totalCollaborators} collaborators
               </p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-secondary/30 to-secondary/50 border-purple-500/50 hover:border-purple-500 transition-all shadow-lg hover:shadow-xl">
+          <Card className="bg-gradient-to-br from-secondary/30 to-secondary/50 border-accent/50 hover:border-accent transition-all shadow-lg hover:shadow-xl">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Files Shared</CardTitle>
-              <div className="h-10 w-10 rounded-full bg-purple-500/10 flex items-center justify-center">
-                <Upload className="h-5 w-5 text-purple-500" />
+              <div className="h-10 w-10 rounded-full bg-accent/10 flex items-center justify-center">
+                <Upload className="h-5 w-5 text-accent" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-purple-500 mb-1">{stats.totalFiles}</div>
+              <div className="text-3xl font-bold text-accent mb-1">{stats.totalFiles}</div>
               <p className="text-xs text-muted-foreground">
                 {formatFileSize(stats.totalFileSize)} total
               </p>
@@ -1047,24 +1047,24 @@ export default function AdminPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-secondary/30 border-border/50 hover:border-blue-500/50 transition-all">
+          <Card className="bg-secondary/30 border-border/50 hover:border-primary/50 transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Messages</CardTitle>
-              <MessageSquare className="h-5 w-5 text-blue-500/50" />
+              <MessageSquare className="h-5 w-5 text-primary/50" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-blue-500">{stats.totalMessages}</div>
+              <div className="text-2xl font-bold text-primary">{stats.totalMessages}</div>
               <p className="text-xs text-muted-foreground mt-1">Project chat messages</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-secondary/30 border-border/50 hover:border-purple-500/50 transition-all">
+          <Card className="bg-secondary/30 border-border/50 hover:border-accent/50 transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Comments</CardTitle>
-              <MessageSquare className="h-5 w-5 text-purple-500/50" />
+              <MessageSquare className="h-5 w-5 text-accent/50" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-purple-500">{stats.totalComments}</div>
+              <div className="text-2xl font-bold text-accent">{stats.totalComments}</div>
               <p className="text-xs text-muted-foreground mt-1">Project comments</p>
             </CardContent>
           </Card>
@@ -1085,7 +1085,7 @@ export default function AdminPage() {
             <TabsTrigger value="projects" className="flex-shrink-0">
               Projects
               {stats.activeProjects > 0 && (
-                <Badge className="ml-2 bg-blue-500 text-background" variant="secondary">
+                <Badge className="ml-2 bg-primary text-background" variant="secondary">
                   {stats.activeProjects}
                 </Badge>
               )}
@@ -1093,7 +1093,7 @@ export default function AdminPage() {
             <TabsTrigger value="files" className="flex-shrink-0">
               Files
               {stats.totalFiles > 0 && (
-                <Badge className="ml-2 bg-purple-500 text-background" variant="secondary">
+                <Badge className="ml-2 bg-accent text-background" variant="secondary">
                   {stats.totalFiles}
                 </Badge>
               )}
@@ -1144,23 +1144,23 @@ export default function AdminPage() {
                   )}
                   <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <FolderOpen className="h-5 w-5 text-blue-500" />
+                      <FolderOpen className="h-5 w-5 text-primary" />
                       <div>
                         <p className="font-medium">Active Projects</p>
                         <p className="text-sm text-muted-foreground">Collaboration projects</p>
                       </div>
                     </div>
-                    <div className="text-2xl font-bold text-blue-500">{stats.activeProjects}</div>
+                    <div className="text-2xl font-bold text-primary">{stats.activeProjects}</div>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <Upload className="h-5 w-5 text-purple-500" />
+                      <Upload className="h-5 w-5 text-accent" />
                       <div>
                         <p className="font-medium">Files Shared</p>
                         <p className="text-sm text-muted-foreground">{formatFileSize(stats.totalFileSize)} total</p>
                       </div>
                     </div>
-                    <div className="text-2xl font-bold text-purple-500">{stats.totalFiles}</div>
+                    <div className="text-2xl font-bold text-accent">{stats.totalFiles}</div>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
                     <div className="flex items-center gap-3">
@@ -1212,7 +1212,7 @@ export default function AdminPage() {
                     </div>
                     <div className="p-3 bg-background/50 rounded-lg">
                       <p className="text-xs text-muted-foreground mb-1">Completed</p>
-                      <p className="text-xl font-bold text-blue-500">
+                      <p className="text-xl font-bold text-primary">
                         {bookings.filter(b => b.status === 'completed').length + 
                          studioBookings.filter(b => b.booking_status === 'completed').length}
                       </p>
@@ -1912,12 +1912,12 @@ export default function AdminPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <CardTitle className="text-2xl flex items-center gap-2">
-                      <FolderOpen className="h-6 w-6 text-blue-500" />
+                      <FolderOpen className="h-6 w-6 text-primary" />
                       Collaboration Projects
                     </CardTitle>
                     <CardDescription>Manage and monitor active collaboration projects</CardDescription>
                   </div>
-                  <Badge className="bg-blue-500 text-background">
+                  <Badge className="bg-primary text-background">
                     {stats.activeProjects} Active
                   </Badge>
                 </div>
@@ -1933,7 +1933,7 @@ export default function AdminPage() {
                     {projects.map((project) => (
                       <div
                         key={project.id}
-                        className="p-4 bg-background/50 rounded-lg border border-border hover:border-blue-500/50 transition-colors"
+                        className="p-4 bg-background/50 rounded-lg border border-border hover:border-primary/50 transition-colors"
                       >
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
@@ -1961,7 +1961,7 @@ export default function AdminPage() {
                               project.status === 'active'
                                 ? 'border-green-500/50 text-green-500'
                                 : project.status === 'completed'
-                                ? 'border-blue-500/50 text-blue-500'
+                                ? 'border-primary/50 text-primary'
                                 : 'border-gray-500/50 text-gray-500'
                             }`}
                           >
@@ -1982,12 +1982,12 @@ export default function AdminPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <CardTitle className="text-2xl flex items-center gap-2">
-                      <Upload className="h-6 w-6 text-purple-500" />
+                      <Upload className="h-6 w-6 text-accent" />
                       Shared Files
                     </CardTitle>
                     <CardDescription>All files shared across collaboration projects</CardDescription>
                   </div>
-                  <Badge className="bg-purple-500 text-background">
+                  <Badge className="bg-accent text-background">
                     {stats.totalFiles} Files • {formatFileSize(stats.totalFileSize)}
                   </Badge>
                 </div>
@@ -2003,12 +2003,12 @@ export default function AdminPage() {
                     {files.map((file) => (
                       <div
                         key={file.id}
-                        className="p-4 bg-background/50 rounded-lg border border-border hover:border-purple-500/50 transition-colors"
+                        className="p-4 bg-background/50 rounded-lg border border-border hover:border-accent/50 transition-colors"
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-4 flex-1">
-                            <div className="h-12 w-12 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                              <FileText className="h-6 w-6 text-purple-500" />
+                            <div className="h-12 w-12 rounded-lg bg-accent/10 flex items-center justify-center">
+                              <FileText className="h-6 w-6 text-accent" />
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-semibold truncate">{file.file_name}</h4>
@@ -2025,7 +2025,7 @@ export default function AdminPage() {
                             </div>
                           </div>
                           {file.is_latest_version && (
-                            <Badge variant="outline" className="border-purple-500/50 text-purple-500 ml-4">
+                            <Badge variant="outline" className="border-accent/50 text-accent ml-4">
                               v{file.version_number}
                             </Badge>
                           )}
@@ -2131,7 +2131,7 @@ export default function AdminPage() {
                             <span className="relative inline-block">
                               {d}
                               {hasBookings && !isPast && (
-                                <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-blue-500" title={`${bookedCount} booked`} />
+                                <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-primary" title={`${bookedCount} booked`} />
                               )}
                             </span>
                           </button>
@@ -2166,7 +2166,7 @@ export default function AdminPage() {
                               onClick={() => !blockedSlotsLoading && !slotBooked && toggleBlockedSlot(expandedDate, timeStr)}
                               className={`min-h-[48px] sm:min-h-[44px] text-sm font-medium rounded-lg transition-colors duration-150 touch-manipulation select-none flex items-center justify-center
                                 ${slotBooked
-                                  ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400 cursor-default border-2 border-blue-500/40'
+                                  ? 'bg-primary/20 text-primary cursor-default border-2 border-primary/40'
                                   : slotBlocked
                                     ? 'bg-destructive/20 text-destructive line-through hover:bg-destructive/30 border-2 border-destructive/50'
                                     : 'bg-green-500/20 text-green-600 dark:text-green-400 hover:bg-green-500/30 border-2 border-green-500/40'

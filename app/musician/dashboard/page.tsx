@@ -523,15 +523,15 @@ export default function MusicianDashboardPage() {
               </Card>
 
               <Card 
-                className="bg-secondary/30 border-blue-500/50 cursor-pointer transition-all hover:bg-secondary/50 hover:border-blue-500 hover:shadow-lg"
+                className="bg-secondary/30 border-primary/50 cursor-pointer transition-all hover:bg-secondary/50 hover:border-primary hover:shadow-lg"
                 onClick={() => setActiveTab('projects')}
               >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Active Projects</CardTitle>
-                  <Users className="h-4 w-4 text-blue-500" />
+                  <Users className="h-4 w-4 text-primary" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-blue-500">{activeProjectsCount}</div>
+                  <div className="text-3xl font-bold text-primary">{activeProjectsCount}</div>
                   <p className="text-xs text-muted-foreground mt-1">
                     Collaboration projects
                   </p>
@@ -539,15 +539,15 @@ export default function MusicianDashboardPage() {
               </Card>
 
               <Card 
-                className="bg-secondary/30 border-purple-500/50 cursor-pointer transition-all hover:bg-secondary/50 hover:border-purple-500 hover:shadow-lg"
+                className="bg-secondary/30 border-accent/50 cursor-pointer transition-all hover:bg-secondary/50 hover:border-accent hover:shadow-lg"
                 onClick={() => setActiveTab('collab')}
               >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Collab Requests</CardTitle>
-                  <MessageSquare className="h-4 w-4 text-purple-500" />
+                  <MessageSquare className="h-4 w-4 text-accent" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-purple-500">{openCollabRequestsCount}</div>
+                  <div className="text-3xl font-bold text-accent">{openCollabRequestsCount}</div>
                   <p className="text-xs text-muted-foreground mt-1">
                     Pending invitations
                   </p>

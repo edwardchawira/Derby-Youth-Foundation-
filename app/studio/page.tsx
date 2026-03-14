@@ -133,28 +133,28 @@ export default function StudioPage() {
 
         <div className="relative container mx-auto px-4 sm:px-6 h-full flex items-center">
           <div className="max-w-3xl mx-auto text-center space-y-3 sm:space-y-4">
-            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg px-2 sm:px-4">
-              Studio <span className="text-coral">Services</span>
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg px-2 sm:px-4 text-white">
+              Studio <span className="text-secondary">Services</span>
             </h1>
-            <p className="text-sm xs:text-base sm:text-lg md:text-xl text-gray-200 drop-shadow-md px-2 sm:px-4">
+            <p className="text-sm xs:text-base sm:text-lg md:text-xl text-white/95 drop-shadow-md px-2 sm:px-4">
               Professional rehearsal space and recording studio facilities. Book by the hour or take advantage of our block rates.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="container mx-auto px-4 sm:px-6 py-10 sm:py-12 md:py-16 max-w-7xl">
+      <section className="container mx-auto px-4 sm:px-6 py-10 sm:py-12 md:py-16 max-w-7xl bg-gradient-to-b from-accent/15 via-muted/50 to-background min-h-screen">
         <Tabs defaultValue="rehearsal" className="w-full">
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 mb-8 sm:mb-12 bg-secondary/50 p-1 gap-0.5 sm:gap-1">
-            <TabsTrigger value="rehearsal" className="py-3 sm:py-2.5 px-3 sm:px-4 text-sm sm:text-base min-h-[44px] data-[state=active]:bg-sky data-[state=active]:text-background rounded-md">
+          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 mb-8 sm:mb-12 bg-muted/80 p-1 gap-0.5 sm:gap-1 border border-border/60">
+            <TabsTrigger value="rehearsal" className="py-3 sm:py-2.5 px-3 sm:px-4 text-sm sm:text-base min-h-[44px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md">
               <Music className="h-4 w-4 mr-1.5 sm:mr-2 shrink-0" />
               Rehearsal
             </TabsTrigger>
-            <TabsTrigger value="recording" className="py-3 sm:py-2.5 px-3 sm:px-4 text-sm sm:text-base min-h-[44px] data-[state=active]:bg-coral data-[state=active]:text-background rounded-md">
+            <TabsTrigger value="recording" className="py-3 sm:py-2.5 px-3 sm:px-4 text-sm sm:text-base min-h-[44px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md">
               <Mic className="h-4 w-4 mr-1.5 sm:mr-2 shrink-0" />
               Recording
             </TabsTrigger>
-            <TabsTrigger value="podcast" className="py-3 sm:py-2.5 px-3 sm:px-4 text-sm sm:text-base min-h-[44px] data-[state=active]:bg-teal data-[state=active]:text-background rounded-md">
+            <TabsTrigger value="podcast" className="py-3 sm:py-2.5 px-3 sm:px-4 text-sm sm:text-base min-h-[44px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md">
               <Podcast className="h-4 w-4 mr-1.5 sm:mr-2 shrink-0" />
               Podcast
             </TabsTrigger>
@@ -168,7 +168,7 @@ export default function StudioPage() {
               const totalPrice = meetsMin ? calculatePrice(service, hrs) : 0;
 
               return (
-                <Card key={service.id} className="bg-secondary/30 border-border/50 max-w-4xl mx-auto overflow-hidden group">
+                <Card key={service.id} className="bg-card/95 border-border/60 max-w-4xl mx-auto overflow-hidden group shadow-md">
                   <div className="relative h-48 sm:h-56 overflow-hidden">
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
@@ -181,10 +181,10 @@ export default function StudioPage() {
                   <CardHeader className="pb-2 sm:pb-6">
                     <div className="flex flex-col xs:flex-row xs:items-start xs:justify-between gap-3 mb-2">
                       <div className="min-w-0">
-                        <CardTitle className="text-2xl sm:text-3xl mb-2 text-sky">{service.name}</CardTitle>
+                        <CardTitle className="text-2xl sm:text-3xl mb-2 text-primary">{service.name}</CardTitle>
                         <CardDescription className="text-sm sm:text-base">{service.description}</CardDescription>
                       </div>
-                      <Badge variant="outline" className="border-sky/50 text-sky shrink-0 self-start">
+                      <Badge className="bg-primary text-primary-foreground shrink-0 self-start border-0">
                         <Music className="h-3 w-3 mr-1" />
                         Rehearsal
                       </Badge>
@@ -192,19 +192,19 @@ export default function StudioPage() {
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-                      <div className="text-center p-3 sm:p-4 bg-background/50 rounded-lg border border-border/50 min-h-[72px] flex flex-col justify-center">
-                        <p className="text-xl sm:text-2xl font-bold text-sky">£{service.hourly_rate}</p>
+                      <div className="text-center p-3 sm:p-4 bg-muted/50 rounded-lg border border-border/50 min-h-[72px] flex flex-col justify-center">
+                        <p className="text-xl sm:text-2xl font-bold text-primary">£{service.hourly_rate}</p>
                         <p className="text-sm text-muted-foreground">per hour</p>
                       </div>
-                      <div className="text-center p-3 sm:p-4 bg-background/50 rounded-lg border border-sky/30 min-h-[72px] flex flex-col justify-center">
-                        <p className="text-xl sm:text-2xl font-bold text-sky">£{service.four_hour_rate}</p>
+                      <div className="text-center p-3 sm:p-4 bg-muted/50 rounded-lg border border-primary/30 min-h-[72px] flex flex-col justify-center">
+                        <p className="text-xl sm:text-2xl font-bold text-primary">£{service.four_hour_rate}</p>
                         <p className="text-sm text-muted-foreground">4 hour block</p>
-                        <p className="text-xs text-sky">Save £{(service.hourly_rate * 4) - service.four_hour_rate}</p>
+                        <p className="text-xs font-medium text-accent">Save £{(service.hourly_rate * 4) - service.four_hour_rate}</p>
                       </div>
-                      <div className="text-center p-3 sm:p-4 bg-background/50 rounded-lg border border-sky/30 min-h-[72px] flex flex-col justify-center">
-                        <p className="text-xl sm:text-2xl font-bold text-sky">£{service.eight_hour_rate}</p>
+                      <div className="text-center p-3 sm:p-4 bg-muted/50 rounded-lg border border-primary/30 min-h-[72px] flex flex-col justify-center">
+                        <p className="text-xl sm:text-2xl font-bold text-primary">£{service.eight_hour_rate}</p>
                         <p className="text-sm text-muted-foreground">8 hour block</p>
-                        <p className="text-xs text-sky">Save £{(service.hourly_rate * 8) - service.eight_hour_rate}</p>
+                        <p className="text-xs font-medium text-accent">Save £{(service.hourly_rate * 8) - service.eight_hour_rate}</p>
                       </div>
                     </div>
 
@@ -215,7 +215,7 @@ export default function StudioPage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {service.features.map((feature, idx) => (
                           <div key={idx} className="flex items-start gap-2">
-                            <Check className="h-5 w-5 text-sky shrink-0 mt-0.5" />
+                            <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                             <span className="text-sm">{feature}</span>
                           </div>
                         ))}
@@ -227,10 +227,10 @@ export default function StudioPage() {
                       <CollapsibleTrigger asChild>
                         <Button
                           variant="outline"
-                          className="w-full justify-between border-sky/50 hover:bg-sky/10 hover:border-sky/70 transition-colors min-h-[48px] py-3 px-4"
+                          className="w-full justify-between border-primary/50 hover:bg-primary/10 hover:border-primary/70 transition-colors min-h-[48px] py-3 px-4"
                         >
                           <span className="flex items-center gap-2">
-                            <CalendarDays className="h-5 w-5 text-sky" />
+                            <CalendarDays className="h-5 w-5 text-primary" />
                             Select date & hours
                           </span>
                           <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180" />
@@ -256,7 +256,7 @@ export default function StudioPage() {
                                   accentColor="sky"
                                 />
                               ) : (
-                                <div className="h-full min-h-[200px] flex items-center justify-center rounded-md border border-dashed border-sky/30 bg-sky/5">
+                                <div className="h-full min-h-[200px] flex items-center justify-center rounded-md border border-dashed border-primary/30 bg-primary/5">
                                   <p className="text-sm text-muted-foreground text-center px-4">
                                     Select a date to see available time slots
                                   </p>
@@ -275,12 +275,12 @@ export default function StudioPage() {
                             <div className="flex flex-col sm:flex-row gap-4 sm:items-end flex-1 w-full">
                               <div className="flex-1">
                                 <Label className="text-sm mb-2 block">Total Price</Label>
-                                <p className="text-2xl sm:text-3xl font-bold text-sky">£{totalPrice}</p>
+                                <p className="text-2xl sm:text-3xl font-bold text-primary">£{totalPrice}</p>
                               </div>
                               <Button
                                 onClick={() => handleAddService(service)}
                                 disabled={!selectedDate || !meetsMin}
-                                className="bg-sky text-background hover:bg-sky/90 shadow-lg disabled:opacity-50 w-full sm:w-auto min-h-[48px] py-3"
+                                className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg disabled:opacity-50 w-full sm:w-auto min-h-[48px] py-3"
                               >
                                 <ShoppingCart className="mr-2 h-4 w-4" />
                                 Add to Cart
@@ -304,7 +304,7 @@ export default function StudioPage() {
               const totalPrice = meetsMin ? calculatePrice(service, hrs) : 0;
 
               return (
-                <Card key={service.id} className="bg-secondary/30 border-border/50 max-w-4xl mx-auto overflow-hidden group">
+                <Card key={service.id} className="bg-card/95 border-border/60 max-w-4xl mx-auto overflow-hidden group shadow-md">
                   <div className="relative h-48 sm:h-56 overflow-hidden">
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
@@ -317,10 +317,10 @@ export default function StudioPage() {
                   <CardHeader className="pb-2 sm:pb-6">
                     <div className="flex flex-col xs:flex-row xs:items-start xs:justify-between gap-3 mb-2">
                       <div className="min-w-0">
-                        <CardTitle className="text-2xl sm:text-3xl mb-2 text-coral">{service.name}</CardTitle>
+                        <CardTitle className="text-2xl sm:text-3xl mb-2 text-primary">{service.name}</CardTitle>
                         <CardDescription className="text-sm sm:text-base">{service.description}</CardDescription>
                       </div>
-                      <Badge variant="outline" className="border-coral/50 text-coral shrink-0 self-start">
+                      <Badge className="bg-primary text-primary-foreground shrink-0 self-start border-0">
                         <Mic className="h-3 w-3 mr-1" />
                         Recording
                       </Badge>
@@ -328,19 +328,19 @@ export default function StudioPage() {
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-                      <div className="text-center p-3 sm:p-4 bg-background/50 rounded-lg border border-border/50 min-h-[72px] flex flex-col justify-center">
-                        <p className="text-xl sm:text-2xl font-bold text-coral">£{service.hourly_rate}</p>
+                      <div className="text-center p-3 sm:p-4 bg-muted/50 rounded-lg border border-border/50 min-h-[72px] flex flex-col justify-center">
+                        <p className="text-xl sm:text-2xl font-bold text-primary">£{service.hourly_rate}</p>
                         <p className="text-sm text-muted-foreground">per hour</p>
                       </div>
-                      <div className="text-center p-3 sm:p-4 bg-background/50 rounded-lg border border-coral/30 min-h-[72px] flex flex-col justify-center">
-                        <p className="text-xl sm:text-2xl font-bold text-coral">£{service.four_hour_rate}</p>
+                      <div className="text-center p-3 sm:p-4 bg-muted/50 rounded-lg border border-primary/30 min-h-[72px] flex flex-col justify-center">
+                        <p className="text-xl sm:text-2xl font-bold text-primary">£{service.four_hour_rate}</p>
                         <p className="text-sm text-muted-foreground">4 hour block</p>
-                        <p className="text-xs text-coral">Save £{(service.hourly_rate * 4) - service.four_hour_rate}</p>
+                        <p className="text-xs font-medium text-accent">Save £{(service.hourly_rate * 4) - service.four_hour_rate}</p>
                       </div>
-                      <div className="text-center p-3 sm:p-4 bg-background/50 rounded-lg border border-coral/30 min-h-[72px] flex flex-col justify-center">
-                        <p className="text-xl sm:text-2xl font-bold text-coral">£{service.eight_hour_rate}</p>
+                      <div className="text-center p-3 sm:p-4 bg-muted/50 rounded-lg border border-primary/30 min-h-[72px] flex flex-col justify-center">
+                        <p className="text-xl sm:text-2xl font-bold text-primary">£{service.eight_hour_rate}</p>
                         <p className="text-sm text-muted-foreground">8 hour block</p>
-                        <p className="text-xs text-coral">Save £{(service.hourly_rate * 8) - service.eight_hour_rate}</p>
+                        <p className="text-xs font-medium text-accent">Save £{(service.hourly_rate * 8) - service.eight_hour_rate}</p>
                       </div>
                     </div>
 
@@ -351,7 +351,7 @@ export default function StudioPage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {service.features.map((feature, idx) => (
                           <div key={idx} className="flex items-start gap-2">
-                            <Check className="h-5 w-5 text-coral shrink-0 mt-0.5" />
+                            <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                             <span className="text-sm">{feature}</span>
                           </div>
                         ))}
@@ -363,10 +363,10 @@ export default function StudioPage() {
                       <CollapsibleTrigger asChild>
                         <Button
                           variant="outline"
-                          className="w-full justify-between border-coral/50 hover:bg-coral/10 hover:border-coral/70 transition-colors min-h-[48px] py-3 px-4"
+                          className="w-full justify-between border-primary/50 hover:bg-primary/10 hover:border-primary/70 transition-colors min-h-[48px] py-3 px-4"
                         >
                           <span className="flex items-center gap-2">
-                            <CalendarDays className="h-5 w-5 text-coral" />
+                            <CalendarDays className="h-5 w-5 text-primary" />
                             Select date & hours
                           </span>
                           <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180" />
@@ -379,7 +379,7 @@ export default function StudioPage() {
                               <StudioAvailabilityCalendar
                                 selected={selectedDate}
                                 onSelect={handleSelectDate}
-                                accentColor="coral"
+                                accentColor="teal"
                               />
                             </div>
                             <div className="flex-1 min-w-0">
@@ -389,10 +389,10 @@ export default function StudioPage() {
                                   selectedSlots={selectedSlots}
                                   onSlotsChange={setSelectedSlots}
                                   minHours={2}
-                                  accentColor="coral"
+                                  accentColor="teal"
                                 />
                               ) : (
-                                <div className="h-full min-h-[200px] flex items-center justify-center rounded-md border border-dashed border-coral/30 bg-coral/5">
+                                <div className="h-full min-h-[200px] flex items-center justify-center rounded-md border border-dashed border-primary/30 bg-primary/5">
                                   <p className="text-sm text-muted-foreground text-center px-4">
                                     Select a date to see available time slots
                                   </p>
@@ -411,12 +411,12 @@ export default function StudioPage() {
                             <div className="flex flex-col sm:flex-row gap-4 sm:items-end flex-1 w-full">
                               <div className="flex-1">
                                 <Label className="text-sm mb-2 block">Total Price</Label>
-                                <p className="text-2xl sm:text-3xl font-bold text-coral">£{totalPrice}</p>
+                                <p className="text-2xl sm:text-3xl font-bold text-primary">£{totalPrice}</p>
                               </div>
                               <Button
                                 onClick={() => handleAddService(service)}
                                 disabled={!selectedDate || !meetsMin}
-                                className="bg-coral text-background hover:bg-coral/90 shadow-lg disabled:opacity-50 w-full sm:w-auto min-h-[48px] py-3"
+                                className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg disabled:opacity-50 w-full sm:w-auto min-h-[48px] py-3"
                               >
                                 <ShoppingCart className="mr-2 h-4 w-4" />
                                 Add to Cart
@@ -434,7 +434,7 @@ export default function StudioPage() {
 
           <TabsContent value="podcast" className="space-y-8">
             {podcastServices.length === 0 ? (
-              <Card className="bg-secondary/30 border-border/50 max-w-4xl mx-auto overflow-hidden group">
+              <Card className="bg-card/95 border-border/60 max-w-4xl mx-auto overflow-hidden group shadow-md">
                 <div className="relative h-56 overflow-hidden">
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
@@ -447,12 +447,12 @@ export default function StudioPage() {
                 <CardHeader className="pb-2 sm:pb-6">
                   <div className="flex flex-col xs:flex-row xs:items-start xs:justify-between gap-3 mb-2">
                     <div className="min-w-0">
-                      <CardTitle className="text-2xl sm:text-3xl mb-2 text-teal">Podcast Studio</CardTitle>
+                      <CardTitle className="text-2xl sm:text-3xl mb-2 text-primary">Podcast Studio</CardTitle>
                       <CardDescription className="text-sm sm:text-base">
                         Professional podcast recording with dedicated setup, broadcast-grade microphones, and multi-camera coverage. Ideal for interviews, shows, and content creation.
                       </CardDescription>
                     </div>
-                    <Badge variant="outline" className="border-teal/50 text-teal shrink-0 self-start">
+                    <Badge className="bg-primary text-primary-foreground shrink-0 self-start border-0">
                       <Podcast className="h-3 w-3 mr-1" />
                       Podcast
                     </Badge>
@@ -464,19 +464,19 @@ export default function StudioPage() {
                     <h4 className="font-semibold mb-3 text-base sm:text-lg">What&apos;s Included</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-teal shrink-0 mt-0.5" />
+                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span className="text-sm">Dedicated 3-hour recording slot</span>
                       </div>
                       <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-teal shrink-0 mt-0.5" />
+                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span className="text-sm">4× Rode Podmic dynamic podcast microphones</span>
                       </div>
                       <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-teal shrink-0 mt-0.5" />
+                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span className="text-sm">4× 4K camera angles (Panasonic GH5)</span>
                       </div>
                       <div className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-teal shrink-0 mt-0.5" />
+                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                         <span className="text-sm">Up to 60-minute edited video (included)</span>
                       </div>
                     </div>
@@ -487,10 +487,10 @@ export default function StudioPage() {
                     <CollapsibleTrigger asChild>
                       <Button
                         variant="outline"
-                        className="w-full justify-between border-teal/50 hover:bg-teal/10 hover:border-teal/70 transition-colors min-h-[48px] py-3 px-4"
+                        className="w-full justify-between border-primary/50 hover:bg-primary/10 hover:border-primary/70 transition-colors min-h-[48px] py-3 px-4"
                       >
                         <span className="flex items-center gap-2">
-                          <CalendarDays className="h-5 w-5 text-teal" />
+                          <CalendarDays className="h-5 w-5 text-primary" />
                           View availability calendar
                         </span>
                         <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180" />
@@ -516,7 +516,7 @@ export default function StudioPage() {
                                   accentColor="teal"
                                 />
                             ) : (
-                              <div className="h-full min-h-[200px] flex items-center justify-center rounded-md border border-dashed border-teal/30 bg-teal/5">
+                              <div className="h-full min-h-[200px] flex items-center justify-center rounded-md border border-dashed border-primary/30 bg-primary/5">
                                 <p className="text-sm text-muted-foreground text-center px-4">
                                   Select a date to see available time slots
                                 </p>
@@ -538,7 +538,7 @@ export default function StudioPage() {
               const threeHourRate = service.three_hour_rate != null ? Number(service.three_hour_rate) : null;
 
               return (
-                <Card key={service.id} className="bg-secondary/30 border-border/50 max-w-4xl mx-auto overflow-hidden group">
+                <Card key={service.id} className="bg-card/95 border-border/60 max-w-4xl mx-auto overflow-hidden group shadow-md">
                   <div className="relative h-48 sm:h-56 overflow-hidden">
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
@@ -551,10 +551,10 @@ export default function StudioPage() {
                   <CardHeader className="pb-2 sm:pb-6">
                     <div className="flex flex-col xs:flex-row xs:items-start xs:justify-between gap-3 mb-2">
                       <div className="min-w-0">
-                        <CardTitle className="text-2xl sm:text-3xl mb-2 text-teal">{service.name}</CardTitle>
+                        <CardTitle className="text-2xl sm:text-3xl mb-2 text-primary">{service.name}</CardTitle>
                         <CardDescription className="text-sm sm:text-base">{service.description}</CardDescription>
                       </div>
-                      <Badge variant="outline" className="border-teal/50 text-teal shrink-0 self-start">
+                      <Badge className="bg-primary text-primary-foreground shrink-0 self-start border-0">
                         <Podcast className="h-3 w-3 mr-1" />
                         Podcast
                       </Badge>
@@ -562,13 +562,13 @@ export default function StudioPage() {
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                      <div className="text-center p-3 sm:p-4 bg-background/50 rounded-lg border border-teal/30 min-h-[72px] flex flex-col justify-center">
-                        <p className="text-xl sm:text-2xl font-bold text-teal">£{threeHourRate ?? service.four_hour_rate}</p>
-                        <p className="text-sm text-muted-foreground">3 hour block <span className="text-teal font-medium">(min)</span></p>
-                        <p className="text-xs text-teal">Includes equipment & video edit</p>
+                      <div className="text-center p-3 sm:p-4 bg-muted/50 rounded-lg border border-primary/30 min-h-[72px] flex flex-col justify-center">
+                        <p className="text-xl sm:text-2xl font-bold text-primary">£{threeHourRate ?? service.four_hour_rate}</p>
+                        <p className="text-sm text-muted-foreground">3 hour block <span className="text-accent font-medium">(min)</span></p>
+                        <p className="text-xs font-medium text-accent">Includes equipment & video edit</p>
                       </div>
-                      <div className="text-center p-3 sm:p-4 bg-background/50 rounded-lg border border-border/50 min-h-[72px] flex flex-col justify-center">
-                        <p className="text-xl sm:text-2xl font-bold text-teal">£{service.hourly_rate}</p>
+                      <div className="text-center p-3 sm:p-4 bg-muted/50 rounded-lg border border-border/50 min-h-[72px] flex flex-col justify-center">
+                        <p className="text-xl sm:text-2xl font-bold text-primary">£{service.hourly_rate}</p>
                         <p className="text-sm text-muted-foreground">per extra hour</p>
                       </div>
                     </div>
@@ -580,7 +580,7 @@ export default function StudioPage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {service.features.map((feature, idx) => (
                           <div key={idx} className="flex items-start gap-2">
-                            <Check className="h-5 w-5 text-teal shrink-0 mt-0.5" />
+                            <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                             <span className="text-sm">{feature}</span>
                           </div>
                         ))}
@@ -592,10 +592,10 @@ export default function StudioPage() {
                       <CollapsibleTrigger asChild>
                         <Button
                           variant="outline"
-                          className="w-full justify-between border-teal/50 hover:bg-teal/10 hover:border-teal/70 transition-colors min-h-[48px] py-3 px-4"
+                          className="w-full justify-between border-primary/50 hover:bg-primary/10 hover:border-primary/70 transition-colors min-h-[48px] py-3 px-4"
                         >
                           <span className="flex items-center gap-2">
-                            <CalendarDays className="h-5 w-5 text-teal" />
+                            <CalendarDays className="h-5 w-5 text-primary" />
                             Select date & hours
                           </span>
                           <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180" />
@@ -621,7 +621,7 @@ export default function StudioPage() {
                                   accentColor="teal"
                                 />
                               ) : (
-                                <div className="h-full min-h-[200px] flex items-center justify-center rounded-md border border-dashed border-teal/30 bg-teal/5">
+                                <div className="h-full min-h-[200px] flex items-center justify-center rounded-md border border-dashed border-primary/30 bg-primary/5">
                                   <p className="text-sm text-muted-foreground text-center px-4">
                                     Select a date to see available time slots
                                   </p>
@@ -640,12 +640,12 @@ export default function StudioPage() {
                             <div className="flex flex-col sm:flex-row gap-4 sm:items-end flex-1 w-full">
                               <div className="flex-1">
                                 <Label className="text-sm mb-2 block">Total Price</Label>
-                                <p className="text-2xl sm:text-3xl font-bold text-teal">£{totalPrice}</p>
+                                <p className="text-2xl sm:text-3xl font-bold text-primary">£{totalPrice}</p>
                               </div>
                               <Button
                                 onClick={() => handleAddService(service)}
                                 disabled={!selectedDate || !meetsMin}
-                                className="bg-teal text-background hover:bg-teal/90 shadow-lg disabled:opacity-50 w-full sm:w-auto min-h-[48px] py-3"
+                                className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg disabled:opacity-50 w-full sm:w-auto min-h-[48px] py-3"
                               >
                                 <ShoppingCart className="mr-2 h-4 w-4" />
                                 Add to Cart
