@@ -1,0 +1,9 @@
+---
+description: Rules for web research and n8n workflow automation
+globs: workflows/**/*, **/*.md
+---
+# Research & Automation
+
+- **Documentation**: Use `context7` by default for any npm package versioning questions.
+- **n8n Integration**: When asked to "automate X," use the `mcp-n8n` server to list existing workflows or suggest a new trigger-action node structure.
+- **Up-to-Date Info**: Use `brave-search` for any errors involving "deprecated" features or recent library releases.

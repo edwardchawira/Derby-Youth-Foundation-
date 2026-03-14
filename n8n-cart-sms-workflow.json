@@ -1,0 +1,107 @@
+{
+  "name": "Cart Item Added - SMS Notification",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cart-item-added",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [250, 300],
+      "webhookId": "cart-item-added-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract cart data from webhook payload\nconst body = $input.item.json.body || $input.item.json;\n\nconst customerName = body.customerName || body.name || 'Customer';\nconst customerPhone = body.customerPhone || body.phone || '';\nconst items = body.items || [];\nconst total = body.total || 0;\n\n// Format item list\nlet itemList = '';\nif (items.length > 0) {\n  itemList = items.map(item => \n    `- ${item.name || item.product_name} (Qty: ${item.quantity || 1})`\n  ).join('\\n');\n} else {\n  itemList = 'Items added to cart';\n}\n\n// Create SMS message\nconst message = `🛒 New Cart Addition!\n\nCustomer: ${customerName}\n\nItems:\n${itemList}\n\nTotal: £${total.toFixed(2)}\n\nTime: ${new Date().toLocaleString('en-GB')}`;\n\nreturn {\n  json: {\n    to: customerPhone || '+447361971592', // Default phone or from payload\n    message: message,\n    customerName: customerName,\n    itemCount: items.length,\n    total: total\n  }\n};"
+      },
+      "id": "format-message",
+      "name": "Format SMS Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "from": "+14155238886",
+        "to": "={{ $json.to }}",
+        "toWhatsapp": false,
+        "message": "={{ $json.message }}",
+        "options": {}
+      },
+      "id": "send-sms",
+      "name": "Send SMS via Twilio",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [650, 300],
+      "credentials": {
+        "twilioApi": {
+          "id": "jxT4obBmQm2fJbSn",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"message\": \"SMS sent successfully\", \"sentTo\": $json.to } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "respond",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [850, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Format SMS Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format SMS Message": {
+      "main": [
+        [
+          {
+            "node": "Send SMS via Twilio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send SMS via Twilio": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-18T00:00:00.000Z",
+  "versionId": ""
+}

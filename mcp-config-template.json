@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "n8n-workflow-builder": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@kernel.salacoste/n8n-workflow-builder"
+      ],
+      "env": {
+        "N8N_API_URL": "https://your-n8n-instance.com",
+        "N8N_API_KEY": "your-api-token-here"
+      }
+    }
+  }
+}

@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 0 85% 60%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 0 85% 60%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 0 85% 60%;
+    --radius: 0.75rem;
+
+    --teal: 180 85% 55%;
+    --coral: 15 85% 65%;
+    --sky: 200 85% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer utilities {
+  .text-gold {
+    @apply text-[hsl(0,85%,60%)];
+  }
+  .bg-gold {
+    @apply bg-[hsl(0,85%,60%)];
+  }
+  .border-gold {
+    @apply border-[hsl(0,85%,60%)];
+  }
+  .hover-gold:hover {
+    @apply text-[hsl(0,85%,70%)];
+  }
+
+  .text-teal {
+    @apply text-[hsl(180,85%,55%)];
+  }
+  .bg-teal {
+    @apply bg-[hsl(180,85%,55%)];
+  }
+  .border-teal {
+    @apply border-[hsl(180,85%,55%)];
+  }
+
+  .text-coral {
+    @apply text-[hsl(15,85%,65%)];
+  }
+  .bg-coral {
+    @apply bg-[hsl(15,85%,65%)];
+  }
+  .border-coral {
+    @apply border-[hsl(15,85%,65%)];
+  }
+
+  .text-sky {
+    @apply text-[hsl(200,85%,60%)];
+  }
+  .bg-sky {
+    @apply bg-[hsl(200,85%,60%)];
+  }
+  .border-sky {
+    @apply border-[hsl(200,85%,60%)];
+  }
+
+  .gradient-gold {
+    background: linear-gradient(135deg, hsl(0, 85%, 60%) 0%, hsl(0, 85%, 70%) 100%);
+  }
+
+  .gradient-vibrant {
+    background: linear-gradient(135deg, hsl(180, 85%, 55%) 0%, hsl(200, 85%, 60%) 50%, hsl(0, 85%, 60%) 100%);
+  }
+
+  .hero-overlay {
+    background: linear-gradient(to bottom, rgba(13, 17, 23, 0.4), rgba(13, 17, 23, 0.9));
+  }
+}
+
+/* Mobile Optimizations */
+@layer utilities {
+  /* Touch-friendly targets - minimum 44x44px */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Prevent text size adjustment on iOS */
+  @supports (-webkit-touch-callout: none) {
+    input,
+    textarea,
+    select {
+      font-size: 16px !important;
+    }
+  }
+
+  /* Smooth scrolling on mobile */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Better tap highlighting */
+  * {
+    -webkit-tap-highlight-color: rgba(212, 175, 55, 0.2);
+  }
+
+  /* Prevent horizontal scroll on mobile */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Safe area insets for notched devices */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .safe-x {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Mobile-specific responsive tables */
+@media (max-width: 768px) {
+  .mobile-table {
+    display: block;
+  }
+  
+  .mobile-table thead {
+    display: none;
+  }
+  
+  .mobile-table tbody,
+  .mobile-table tr,
+  .mobile-table td {
+    display: block;
+    width: 100%;
+  }
+  
+  .mobile-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .mobile-table td {
+    text-align: right;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid hsl(var(--border) / 0.5);
+  }
+  
+  .mobile-table td:before {
+    content: attr(data-label);
+    float: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .mobile-table td:last-child {
+    border-bottom: none;
+  }
+}

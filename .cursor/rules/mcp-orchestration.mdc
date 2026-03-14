@@ -1,0 +1,12 @@
+---
+description: Global rule for tool selection and workflow planning
+globs: **/*
+alwaysApply: true
+---
+# MCP Orchestration Logic
+
+Before writing any code, follow this "Search & Plan" sequence:
+1. **Search First**: Use `brave-search` to find latest API versions or `context7` for specific library docs.
+2. **Context Check**: Use `context7` to pull up-to-date documentation for any library that has changed since 2024.
+3. **Draft Plan**: Create a technical plan. If the task involves automation, propose an `n8n` workflow.
+4. **UI Refinement**: Use `shadcn-studio-mcp` to fetch production-ready blocks before manual styling.

@@ -1,0 +1,17 @@
+{
+  "type": "function",
+  "function": {
+    "name": "searchInventory",
+    "description": "Search the products inventory for items matching a query. Searches both product names and descriptions. Returns an array of products with details including id, name, description, price, technical specifications, and YouTube URL.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "The search query to find products. Can be a product name, keyword, or description. Examples: 'microphone', 'audio interface', 'speakers', 'studio monitors'"
+        }
+      },
+      "required": ["query"]
+    }
+  }
+}

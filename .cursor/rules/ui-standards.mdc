@@ -1,0 +1,9 @@
+---
+description: Rules for frontend and UI development using Shadcn
+globs: components/**/*.tsx, app/**/*.tsx
+---
+# UI Standards
+
+- **Shadcn First**: Always check `shadcn-studio-mcp` for existing blocks or components before building from scratch.
+- **Visual Accuracy**: When asked to build a page, use the MCP to list available "Landing Page" or "Dashboard" blocks.
+- **Consistency**: Ensure all components use Tailwind CSS and follow the project's `theme.json`.

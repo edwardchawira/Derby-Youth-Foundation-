@@ -1,0 +1,108 @@
+{
+  "name": "Cart Item Added - SMS Notification (Vonage)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cart-item-added",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [250, 300],
+      "webhookId": "cart-item-added-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract cart data from webhook payload\nconst body = $input.item.json.body || $input.item.json;\n\n// Get customer information\nconst customerName = body.customerName || body.name || 'Customer';\nconst customerPhone = body.customerPhone || body.phone || '447361971592';\nconst items = body.items || [];\nconst total = body.total || 0;\n\n// Format item list (simplified, no special characters)\nlet itemList = '';\nif (items.length > 0) {\n  itemList = items.map(item => {\n    const itemName = item.name || item.product_name || 'Item';\n    const quantity = item.quantity || 1;\n    const price = item.price ? `GBP${item.price.toFixed(2)}` : '';\n    return `${itemName} x${quantity}${price ? ` (${price})` : ''}`;\n  }).join(', ');\n} else {\n  itemList = 'Items added to cart';\n}\n\n// Create simplified SMS message (NO EMOJIS, NO SPECIAL CHARS that trigger spam filters)\nconst message = `Cart Update\n\nCustomer: ${customerName}\n\nItems: ${itemList}\n\nTotal: GBP${total.toFixed(2)}\n\nTime: ${new Date().toLocaleString('en-GB', { \n  day: '2-digit', \n  month: '2-digit', \n  year: 'numeric',\n  hour: '2-digit',\n  minute: '2-digit'\n})}`;\n\n// Vonage requires phone numbers without +, spaces, or leading zeros\n// Convert +447361971592 to 447361971592\nconst formatPhoneForVonage = (phone) => {\n  return phone.replace(/^\\+/, '').replace(/\\s/g, '').replace(/^0/, '');\n};\n\nreturn {\n  json: {\n    from: '447700900000', // Use your Vonage phone number (replace with your actual number)\n    to: formatPhoneForVonage(customerPhone),\n    message: message,\n    customerName: customerName,\n    itemCount: items.length,\n    total: total,\n    items: items\n  }\n};"
+      },
+      "id": "format-message",
+      "name": "Format SMS Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "operation": "sendSMS",
+        "from": "={{ $json.from }}",
+        "to": "={{ $json.to }}",
+        "text": "={{ $json.message }}",
+        "options": {}
+      },
+      "id": "send-sms",
+      "name": "Send SMS via Vonage",
+      "type": "n8n-nodes-base.vonage",
+      "typeVersion": 1,
+      "position": [650, 300],
+      "credentials": {
+        "vonageApi": {
+          "id": "",
+          "name": "Vonage account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"message\": \"SMS sent successfully\", \"sentTo\": $json.to, \"customerName\": $json.customerName, \"itemCount\": $json.itemCount, \"total\": $json.total } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "respond",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [850, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Format SMS Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format SMS Message": {
+      "main": [
+        [
+          {
+            "node": "Send SMS via Vonage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send SMS via Vonage": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-19T00:00:00.000Z",
+  "versionId": ""
+}

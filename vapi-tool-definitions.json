@@ -1,0 +1,360 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "checkAvailability",
+      "description": "Check if a date/time is available for booking. For studio bookings: checks time slot availability. For equipment bookings: validates the date is not in the past (equipment doesn't require time-based availability). Returns current date, availability status, and any conflicts.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "booking_date": {
+            "type": "string",
+            "description": "The date for the booking in DD-MM-YYYY format. Example: '25-12-2026' for December 25th, 2026. Must be today or a future date. The function will return the current date so you know what today is.",
+            "pattern": "^\\d{2}-\\d{2}-\\d{4}$"
+          },
+          "booking_time": {
+            "type": "string",
+            "description": "The start time for the booking in HH:MM format (24-hour). Example: '14:00' for 2 PM. Defaults to '09:00' if not provided.",
+            "pattern": "^([0-1][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "session_hours": {
+            "type": "integer",
+            "description": "Number of hours for the booking session. Rehearsal minimum: 3 hours. Recording minimum: 1 hour. Defaults to 1 if not provided.",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "booking_type": {
+            "type": "string",
+            "description": "Type of booking: 'studio' for studio sessions or 'equipment' for equipment rental. Defaults to 'studio'.",
+            "enum": ["studio", "equipment"]
+          }
+        },
+        "required": ["booking_date"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "description": "Get available time slots for a specific date. For studio bookings: returns available time slots. For equipment bookings: returns suggested collection times (equipment doesn't require strict time slot booking). Always returns the current date for reference.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "booking_date": {
+            "type": "string",
+            "description": "The date to check availability for in DD-MM-YYYY format. Example: '25-12-2024' for December 25th, 2024",
+            "pattern": "^\\d{2}-\\d{2}-\\d{4}$"
+          },
+          "booking_type": {
+            "type": "string",
+            "description": "Type of booking: 'studio' for studio sessions or 'equipment' for equipment rental. Defaults to 'studio'.",
+            "enum": ["studio", "equipment"]
+          },
+          "session_hours": {
+            "type": "integer",
+            "description": "Number of hours needed for the session. Rehearsal minimum: 3. Recording minimum: 1. Used to find slots that can accommodate this duration. Defaults to 1.",
+            "minimum": 1,
+            "maximum": 12
+          }
+        },
+        "required": ["booking_date"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "createBooking",
+      "description": "Create a new booking. Automatically checks for conflicts before creating. Use this after confirming availability and collecting customer information. Returns booking confirmation with booking ID.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "customer_name": {
+            "type": "string",
+            "description": "Full name of the customer making the booking"
+          },
+          "customer_email": {
+            "type": "string",
+            "description": "Email address of the customer in proper format. CRITICAL: When the customer spells out their email (e.g., 'edward chawira at yahoo dot co dot u k'), you MUST convert it to proper email format: 'edward.chawira@yahoo.co.uk'. Replace 'at' with '@', replace 'dot' with '.', remove spaces between the name parts, and use lowercase. Examples: 'john at gmail dot com' becomes 'john@gmail.com', 'jane dot smith at company dot co dot uk' becomes 'jane.smith@company.co.uk'. Always format as standard email: username@domain.com or username@domain.co.uk.",
+            "format": "email"
+          },
+          "customer_phone": {
+            "type": "string",
+            "description": "Phone number of the customer in a natural, readable format. For UK numbers starting with 0, format with spaces for readability (e.g., '07361 971592' or '0736 197 1592'). For international numbers, use country code with + prefix and spaces (e.g., '+44 736 197 1592' for UK, '+1 555 123 4567' for US). When customer says numbers one by one (e.g., 'zero seven three six one nine seven one five nine two'), convert to digits with natural spacing. UK mobile numbers: format as '07XXX XXXXXX' or '07XX XXX XXXX'. Remove unnecessary dashes or brackets."
+          },
+          "booking_date": {
+            "type": "string",
+            "description": "Date of the booking in DD-MM-YYYY format. Example: '25-12-2026' for December 25th, 2026. Current year is 2026.",
+            "pattern": "^\\d{2}-\\d{2}-\\d{4}$"
+          },
+          "booking_time": {
+            "type": "string",
+            "description": "Time in HH:MM format (24-hour). For studio bookings: session start time (e.g., '14:00' for 2 PM). For equipment bookings: collection time. Required for studio bookings, recommended for equipment bookings.",
+            "pattern": "^([0-1][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "session_hours": {
+            "type": "integer",
+            "description": "Number of hours for studio session bookings. Not used for equipment rentals (use duration_days instead). IMPORTANT: Rehearsal space has a minimum of 3 hours. Recording studio minimum is 1 hour.",
+            "minimum": 1,
+            "maximum": 12,
+            "default": 1
+          },
+          "duration_days": {
+            "type": "integer",
+            "description": "Number of days for equipment rental. Required for equipment bookings. Example: 1 for one day, 3 for three days.",
+            "minimum": 1,
+            "maximum": 30
+          },
+          "booking_type": {
+            "type": "string",
+            "description": "Type of booking: 'studio' for studio sessions or 'equipment' for equipment rental. IMPORTANT: If the customer wants a studio booking, you MUST also ask them which type of studio service they want ('rehearsal' for rehearsal space or 'recording' for recording studio) and provide the service_type parameter. For studio bookings, you must also provide booking_time and session_hours.",
+            "enum": ["studio", "equipment"]
+          },
+          "service_type": {
+            "type": "string",
+            "description": "REQUIRED for studio bookings (booking_type='studio'). The type of studio service: 'rehearsal' for rehearsal space or 'recording' for recording studio. YOU MUST ASK THE CUSTOMER which type they want before creating the booking. Ask: 'Would you like rehearsal space or recording studio?' Example responses: if customer says 'I want to rehearse', 'rehearsal space', 'rehearsal', or 'I need to practice', use 'rehearsal'. If they say 'I want to record', 'recording studio', 'recording', or 'I need to record music', use 'recording'. This determines which pricing to fetch from the database.",
+            "enum": ["rehearsal", "recording"]
+          },
+          "package_name": {
+            "type": "string",
+            "description": "Name of the package or service. For studio bookings: This will be automatically set to 'Rehearsal Space' or 'Recording Studio' based on service_type, but you can specify it explicitly if needed. For equipment: package name if applicable."
+          },
+          "package_price": {
+            "type": "number",
+            "description": "Price of the booking in your currency (e.g., 50.00 for £50). For studio bookings: If not provided, the system will automatically calculate the price from the studio_services table based on session_hours (uses hourly_rate, four_hour_rate, or eight_hour_rate as appropriate). For equipment bookings: This should be the total price including all items."
+          },
+          "equipment_items": {
+            "type": "array",
+            "description": "Array of equipment items being rented. Required for equipment bookings. Each item must include name, quantity, price (per day), and optionally duration (days).",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Equipment item ID from the equipment list"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the equipment item (e.g., 'Drum Kit', 'Microphone', 'Keyboard')"
+                },
+                "quantity": {
+                  "type": "integer",
+                  "description": "Number of units of this equipment item",
+                  "minimum": 1
+                },
+                "price": {
+                  "type": "number",
+                  "description": "Price per day for this equipment item"
+                },
+                "duration": {
+                  "type": "integer",
+                  "description": "Number of days to rent this item (defaults to duration_days if not specified)",
+                  "minimum": 1
+                }
+              },
+              "required": ["name", "quantity", "price"]
+            }
+          },
+          "special_requests": {
+            "type": "string",
+            "description": "Any special requests or notes from the customer. Optional."
+          }
+        },
+        "required": ["customer_name", "customer_email", "booking_date", "booking_type"]
+      }
+    }
+  },
+    {
+      "type": "function",
+      "function": {
+        "name": "listBookings",
+        "description": "List existing bookings for a customer. Use this when a customer asks about their bookings, wants to check their schedule, or when you need to find a booking but only have email/phone. IMPORTANT: If the customer provides a specific booking reference (e.g., 'STUDIO-33B6E329'), use updateBooking or deleteBooking directly with that reference - don't use this function first. CRITICAL: When calling this function, you MUST include customer_email or customer_phone in the request body. The function will fail with an error if neither is provided. Always extract and include the email/phone from the conversation context when calling this function.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "booking_id": {
+              "type": "string",
+              "description": "Direct booking ID to search for. If provided, this will search for a specific booking by ID. For studio bookings, this is the UUID. If customer provides a booking reference like 'STUDIO-33B6E329', try using this as booking_id. Optional - if not provided, search by customer_email or customer_phone."
+            },
+            "booking_number": {
+              "type": "string",
+              "description": "Booking number for equipment bookings (e.g., 'EQ-1234567890-ABC'). If customer provides a booking reference, try this first. Optional - if not provided, search by customer_email or customer_phone."
+            },
+            "customer_email": {
+              "type": "string",
+              "description": "Email address of the customer to search for bookings. REQUIRED if booking_id or booking_number is not provided. CRITICAL: You MUST include this parameter when the customer has provided their email address or confirmed it. Extract the email from the conversation context and include it in the request body. Format: convert 'at' to '@' and 'dot' to '.'. Example: 'edwardchawira@yahoo.co.uk'. If the customer has confirmed their email in the conversation, you MUST use it here.",
+              "format": "email"
+            },
+            "customer_phone": {
+              "type": "string",
+              "description": "Phone number of the customer to search for bookings. Include country code if available. REQUIRED if booking_id or booking_number is not provided AND customer_email is not available. CRITICAL: You MUST include this parameter when the customer has provided their phone number. Extract the phone from the conversation context and include it in the request body. Format: Add natural spacing for UK numbers (e.g., '07361 971 592'). If the customer has confirmed their phone in the conversation, you MUST use it here."
+            },
+          "booking_type": {
+            "type": "string",
+            "description": "Filter by booking type: 'studio', 'equipment', or omit to get all types",
+            "enum": ["studio", "equipment"]
+          },
+          "date_from": {
+            "type": "string",
+            "description": "Filter bookings from this date in DD-MM-YYYY format (e.g., '01-12-2024'). Optional, defaults to today if not provided.",
+            "pattern": "^\\d{2}-\\d{2}-\\d{4}$"
+          },
+          "date_to": {
+            "type": "string",
+            "description": "Filter bookings up to this date in DD-MM-YYYY format (e.g., '31-12-2026'). Optional. Current year is 2026.",
+            "pattern": "^\\d{2}-\\d{2}-\\d{4}$"
+          }
+        },
+        "required": []
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "listEquipment",
+      "description": "List available equipment items for rental. Use this when a customer asks about what equipment is available, wants to rent equipment, or asks about equipment prices.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Filter by equipment category (e.g., 'Sound Equipment', 'Keyboards', 'Drums', 'Microphones'). Optional."
+          },
+          "search": {
+            "type": "string",
+            "description": "Search for equipment by name or description. Example: 'microphone', 'drum kit', 'keyboard'. Optional."
+          },
+          "available_only": {
+            "type": "boolean",
+            "description": "Only show available equipment (default: true). Set to false to show all equipment including unavailable items.",
+            "default": true
+          }
+        },
+        "required": []
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "getPricing",
+      "description": "Get studio session pricing information. Use this when a customer asks about prices, rates, or costs for studio sessions. Returns accurate pricing from the database including hourly rates and package prices (4-hour and 8-hour packages).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "service_type": {
+            "type": "string",
+            "description": "Filter by service type: 'rehearsal' for rehearsal space pricing, 'recording' for recording studio pricing. YOU SHOULD ASK THE CUSTOMER which type they want before calling this function. Ask: 'Would you like pricing for rehearsal space or recording studio?' If they say 'rehearsal', 'practice space', or similar, use 'rehearsal'. If they say 'recording', 'recording studio', or similar, use 'recording'. Optional - if not provided, returns all pricing for both types.",
+            "enum": ["rehearsal", "recording"]
+          }
+        },
+        "required": []
+      }
+    }
+  },
+    {
+      "type": "function",
+      "function": {
+        "name": "updateBooking",
+        "description": "Update or amend an existing booking. Use this when a customer wants to change their booking details (date, time, duration, etc.) or cancel a booking. Supports both studio and equipment bookings. IMPORTANT: When a customer provides a booking reference (e.g., 'STUDIO-33B6E329'), use it directly as booking_id in this function. You don't need to call listBookings first - just use the booking reference they provide directly. For updates: automatically recalculates pricing if duration changes. For cancellation: sets booking status to 'cancelled' without deleting the record.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "booking_id": {
+              "type": "string",
+              "description": "Unique booking ID. Required for studio bookings. Accepts full UUID or booking reference format like 'STUDIO-33B6E329' (just use what the customer provides - the system will find it). For equipment bookings, you can use either booking_id or booking_number. IMPORTANT: When customer provides a booking reference, use it directly here - don't call listBookings first."
+            },
+          "booking_number": {
+            "type": "string",
+            "description": "Booking number (e.g., 'EQ-1234567890-ABC'). Alternative to booking_id for equipment bookings. Get this from listBookings if the customer doesn't know it."
+          },
+          "booking_type": {
+            "type": "string",
+            "description": "Type of booking: 'studio' for studio sessions or 'equipment' for equipment rental. Required to identify which table to update.",
+            "enum": ["studio", "equipment"]
+          },
+          "action": {
+            "type": "string",
+            "description": "Action to perform: 'update' to modify booking details, or 'cancel' to cancel the booking. Defaults to 'update'.",
+            "enum": ["update", "cancel"],
+            "default": "update"
+          },
+          "customer_email": {
+            "type": "string",
+            "description": "Customer email for verification. Optional but recommended to ensure the booking belongs to the customer.",
+            "format": "email"
+          },
+          "new_booking_date": {
+            "type": "string",
+            "description": "New booking date in DD-MM-YYYY format. Example: '25-12-2026'. Only provide if changing the date. For studio bookings, system will check for time slot conflicts.",
+            "pattern": "^\\d{2}-\\d{2}-\\d{4}$"
+          },
+          "new_booking_time": {
+            "type": "string",
+            "description": "New booking time in HH:MM format (24-hour). For studio bookings: session start time. Only provide if changing the time. For studio bookings, system will check for time slot conflicts.",
+            "pattern": "^([0-1][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "new_session_hours": {
+            "type": "integer",
+            "description": "New session duration in hours (for studio bookings only). Rehearsal minimum: 3 hours. Only provide if changing the duration. System will automatically recalculate the price based on the new duration.",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "new_duration_days": {
+            "type": "integer",
+            "description": "New rental duration in days (for equipment bookings only). Only provide if changing the duration. System will automatically recalculate the total price.",
+            "minimum": 1,
+            "maximum": 30
+          },
+          "new_booking_time_equipment": {
+            "type": "string",
+            "description": "New collection time in HH:MM format (for equipment bookings only). Only provide if changing the collection time.",
+            "pattern": "^([0-1][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "new_special_requests": {
+            "type": "string",
+            "description": "Updated special requests or notes. Only provide if changing the special requests."
+          }
+        },
+        "required": ["booking_type"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "deleteBooking",
+      "description": "Permanently delete a booking from the system. Use this when a customer wants to completely remove their booking record. WARNING: This permanently deletes the booking and cannot be undone. Consider using updateBooking with action='cancel' instead to keep a record. Requires explicit confirmation (confirm_deletion=true).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "booking_id": {
+            "type": "string",
+            "description": "Unique booking ID. Required for studio bookings. For equipment bookings, you can use either booking_id or booking_number. Get this from listBookings if the customer doesn't know it."
+          },
+          "booking_number": {
+            "type": "string",
+            "description": "Booking number (e.g., 'EQ-1234567890-ABC'). Alternative to booking_id for equipment bookings. Get this from listBookings if the customer doesn't know it."
+          },
+          "booking_type": {
+            "type": "string",
+            "description": "Type of booking: 'studio' for studio sessions or 'equipment' for equipment rental. Required to identify which table to delete from.",
+            "enum": ["studio", "equipment"]
+          },
+          "customer_email": {
+            "type": "string",
+            "description": "Customer email for verification. Optional but recommended to ensure the booking belongs to the customer before deletion.",
+            "format": "email"
+          },
+          "confirm_deletion": {
+            "type": "boolean",
+            "description": "Safety confirmation flag. MUST be set to true to proceed with deletion. This prevents accidental deletions. Always set to true when the customer confirms they want to permanently delete.",
+            "default": false
+          }
+        },
+        "required": ["booking_type", "confirm_deletion"]
+      }
+    }
+  }
+]

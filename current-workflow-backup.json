@@ -1,0 +1,202 @@
+﻿{
+    "updatedAt":  "2026-01-19T02:57:58.941Z",
+    "createdAt":  "2026-01-19T01:30:51.893Z",
+    "id":  "6T9CG-hWOta3UT3WGaave",
+    "name":  "Cart Item Added - SMS Notification",
+    "description":  null,
+    "active":  false,
+    "isArchived":  false,
+    "nodes":  [
+                  {
+                      "parameters":  {
+                                         "httpMethod":  "POST",
+                                         "path":  "cart-item-added",
+                                         "responseMode":  "responseNode",
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "c54a8167-1de6-4bff-a311-4b4dfc6d47b0",
+                      "name":  "Webhook",
+                      "type":  "n8n-nodes-base.webhook",
+                      "typeVersion":  2.1,
+                      "position":  [
+                                       0,
+                                       0
+                                   ],
+                      "webhookId":  "cart-item-added-webhook"
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "// Extract cart data from webhook payload\nconst body = $input.item.json.body || $input.item.json;\n\n// Get customer information\nconst customerName = body.customerName || body.name || \u0027Customer\u0027;\nconst customerPhone = body.customerPhone || body.phone || \u0027447361971592\u0027;\nconst items = body.items || [];\nconst total = body.total || 0;\n\n// Format item list\nlet itemList = \u0027\u0027;\nif (items.length \u003e 0) {\n  itemList = items.map(item =\u003e {\n    const itemName = item.name || item.product_name || \u0027Item\u0027;\n    const quantity = item.quantity || 1;\n    const price = item.price ? `£${item.price.toFixed(2)}` : \u0027\u0027;\n    return `�?� ${itemName} x${quantity}${price ? ` (${price})` : \u0027\u0027}`;\n  }).join(\u0027\\n\u0027);\n} else {\n  itemList = \u0027Items added to cart\u0027;\n}\n\n// Create formatted SMS message\nconst message = `�Y\u003e\u0027 New Cart Addition!\\n\\nCustomer: ${customerName}\\n\\nItems:\\n${itemList}\\n\\nTotal: £${total.toFixed(2)}\\n\\nTime: ${new Date().toLocaleString(\u0027en-GB\u0027, { \n  day: \u00272-digit\u0027, \n  month: \u00272-digit\u0027, \n  year: \u0027numeric\u0027,\n  hour: \u00272-digit\u0027,\n  minute: \u00272-digit\u0027\n})}`;\n\n// Vonage requires phone numbers without +, spaces, or leading zeros\n// Convert +447361971592 to 447361971592\nconst formatPhoneForVonage = (phone) =\u003e {\n  return phone.replace(/^\\+/, \u0027\u0027).replace(/\\s/g, \u0027\u0027).replace(/^0/, \u0027\u0027);\n};\n\nreturn {\n  json: {\n    from: \u0027PinnacleSSA\u0027, // Your Vonage sender ID or number\n    to: formatPhoneForVonage(customerPhone),\n    message: message,\n    customerName: customerName,\n    itemCount: items.length,\n    total: total,\n    items: items\n  }\n};"
+                                     },
+                      "id":  "11e3e7ff-3aa7-4fed-956b-62f34e3184e9",
+                      "name":  "Format SMS Message",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       208,
+                                       0
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "respondWith":  "json",
+                                         "responseBody":  "={{ { \"success\": true, \"message\": \"SMS sent successfully\", \"sentTo\": $json.to, \"customerName\": $json.customerName, \"itemCount\": $json.itemCount, \"total\": $json.total } }}",
+                                         "options":  {
+                                                         "responseCode":  200
+                                                     }
+                                     },
+                      "id":  "84136917-a445-4e31-ae01-fda8efe382ac",
+                      "name":  "Respond to Webhook",
+                      "type":  "n8n-nodes-base.respondToWebhook",
+                      "typeVersion":  1.5,
+                      "position":  [
+                                       608,
+                                       0
+                                   ]
+                  },
+                  {
+                      "id":  "send-sms-vonage",
+                      "name":  "Send SMS via Vonage",
+                      "parameters":  {
+                                         "from":  "={{ $json.from }}",
+                                         "operation":  "sendSMS",
+                                         "to":  "={{ $json.to }}",
+                                         "options":  {
+
+                                                     },
+                                         "text":  "={{ $json.message }}"
+                                     },
+                      "credentials":  {
+                                          "vonageApi":  {
+                                                            "id":  "ZjIvjGVQI17QMT4x",
+                                                            "name":  "Vonage account"
+                                                        }
+                                      },
+                      "type":  "n8n-nodes-base.vonage",
+                      "position":  [
+                                       400,
+                                       0
+                                   ],
+                      "typeVersion":  1
+                  }
+              ],
+    "connections":  {
+                        "Webhook":  {
+                                        "main":  [
+                                                     {
+                                                         "node":  "Format SMS Message",
+                                                         "type":  "main",
+                                                         "index":  0
+                                                     }
+                                                 ]
+                                    },
+                        "Format SMS Message":  {
+                                                   "main":  [
+                                                                [
+                                                                    {
+                                                                        "node":  "Send SMS via Vonage",
+                                                                        "type":  "main",
+                                                                        "index":  0
+                                                                    }
+                                                                ]
+                                                            ]
+                                               },
+                        "Send SMS via Twilio":  {
+                                                    "main":  [
+                                                                 {
+                                                                     "node":  "Respond to Webhook",
+                                                                     "type":  "main",
+                                                                     "index":  0
+                                                                 }
+                                                             ]
+                                                },
+                        "Send SMS via Vonage":  {
+                                                    "main":  [
+                                                                 {
+                                                                     "node":  "Respond to Webhook",
+                                                                     "type":  "main",
+                                                                     "index":  0
+                                                                 }
+                                                             ]
+                                                }
+                    },
+    "settings":  {
+                     "executionOrder":  "v1",
+                     "availableInMCP":  false,
+                     "timeSavedMode":  "fixed",
+                     "callerPolicy":  "workflowsFromSameOwner"
+                 },
+    "staticData":  null,
+    "meta":  null,
+    "pinData":  {
+
+                },
+    "versionId":  "fed4457f-1828-40d7-ba4f-5148cd0bd24d",
+    "activeVersionId":  null,
+    "versionCounter":  19,
+    "triggerCount":  1,
+    "shared":  [
+                   {
+                       "updatedAt":  "2026-01-19T01:30:51.893Z",
+                       "createdAt":  "2026-01-19T01:30:51.893Z",
+                       "role":  "workflow:owner",
+                       "workflowId":  "6T9CG-hWOta3UT3WGaave",
+                       "projectId":  "APYjxGCbJvJFHdrw",
+                       "project":  {
+                                       "updatedAt":  "2025-12-23T18:09:55.578Z",
+                                       "createdAt":  "2025-12-23T18:06:39.018Z",
+                                       "id":  "APYjxGCbJvJFHdrw",
+                                       "name":  "Edward Chawira \u003cedward.t.chawira@etccoms.co\u003e",
+                                       "type":  "personal",
+                                       "icon":  null,
+                                       "description":  null,
+                                       "creatorId":  "6c7e2a0e-2056-4717-b959-568bb3501f12",
+                                       "projectRelations":  [
+                                                                {
+                                                                    "updatedAt":  "2025-12-23T18:06:39.018Z",
+                                                                    "createdAt":  "2025-12-23T18:06:39.018Z",
+                                                                    "userId":  "6c7e2a0e-2056-4717-b959-568bb3501f12",
+                                                                    "projectId":  "APYjxGCbJvJFHdrw",
+                                                                    "user":  {
+                                                                                 "updatedAt":  "2026-01-19T00:59:23.222Z",
+                                                                                 "createdAt":  "2025-12-23T18:06:37.978Z",
+                                                                                 "id":  "6c7e2a0e-2056-4717-b959-568bb3501f12",
+                                                                                 "email":  "edward.t.chawira@etccoms.co",
+                                                                                 "firstName":  "Edward",
+                                                                                 "lastName":  "Chawira",
+                                                                                 "personalizationAnswers":  {
+                                                                                                                "version":  "v4",
+                                                                                                                "personalization_survey_submitted_at":  "2025-12-23T18:10:22.698Z",
+                                                                                                                "personalization_survey_n8n_version":  "2.2.0",
+                                                                                                                "companySize":  "\u003c20",
+                                                                                                                "companyType":  "saas",
+                                                                                                                "role":  "business-owner",
+                                                                                                                "reportedSource":  "youtube"
+                                                                                                            },
+                                                                                 "settings":  {
+                                                                                                  "userActivated":  true,
+                                                                                                  "firstSuccessfulWorkflowId":  "nuCLAurIxykMtuG3W81RR",
+                                                                                                  "userActivatedAt":  1766528415416,
+                                                                                                  "easyAIWorkflowOnboarded":  true,
+                                                                                                  "npsSurvey":  {
+                                                                                                                    "responded":  true,
+                                                                                                                    "lastShownAt":  1767327774876
+                                                                                                                }
+                                                                                              },
+                                                                                 "disabled":  false,
+                                                                                 "mfaEnabled":  false,
+                                                                                 "lastActiveAt":  "2026-01-19",
+                                                                                 "isPending":  false
+                                                                             }
+                                                                }
+                                                            ]
+                                   }
+                   }
+               ],
+    "tags":  [
+
+             ],
+    "activeVersion":  null
+}

@@ -1,0 +1,9 @@
+---
+description: Rules for Supabase database and API testing
+globs: lib/supabase/**/*, scripts/**/*, api/**/*
+---
+# Database & API Rules
+
+- **Schema Awareness**: Use the `supabase` MCP to inspect the current table schema before writing SQL or Edge Functions.
+- **Safety**: Never perform destructive operations (DROP/TRUNCATE) without explicit user confirmation.
+- **API Documentation**: After creating an endpoint, use the `postman` MCP to generate a collection or test the endpoint for 200 OK responses.
